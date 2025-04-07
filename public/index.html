@@ -1,43 +1,447 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能试课叫号系统</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .teacher-selection {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        
+        .student-management {
+            margin-bottom: 20px;
+        }
+        
+        .student-input {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .student-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+        
+        .student-input button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .progress-section {
+            margin: 20px 0;
+        }
+        
+        .current-list, .completed-list {
+            margin-bottom: 20px;
+        }
+        
+        .list-header {
+            margin-bottom: 10px;
+        }
+        
+        .student-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        
+        .student-item.current {
+            background-color: #e3f2fd;
+        }
+        
+        .student-item.completed {
+            background-color: #e8f5e9;
+        }
+        
+        .student-actions button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .call-btn { background-color: #4CAF50; color: white; }
+        .miss-btn { background-color: #f44336; color: white; }
+        .requeue-btn { background-color: #2196F3; color: white; }
+        .finish-btn { background-color: #FF9800; color: white; }
+        
+        .progress-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .progress-table th, .progress-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .current-badge { background-color: #4CAF50; }
+        .missed-badge { background-color: #f44336; }
+        .completed-badge { background-color: #9C27B0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>智能试课叫号系统</h1>
+        
+        <div class="teacher-selection">
+            <h2>选择任课老师</h2>
+            <select id="teacher-select">
+                <option value="">-- 请选择校区和老师 --</option>
+                <optgroup label="山师校区">
+                    <option value="张老师">张老师</option>
+                    <option value="李老师">李老师</option>
+                    <option value="王老师">王老师</option>
+                </optgroup>
+                <optgroup label="山艺校区">
+                    <option value="赵老师">赵老师</option>
+                    <option value="陈老师">陈老师</option>
+                    <option value="周老师">周老师</option>
+                </optgroup>
+                <optgroup label="山大校区">
+                    <option value="刘老师">刘老师</option>
+                    <option value="徐老师">徐老师</option>
+                    <option value="孙老师">孙老师</option>
+                </optgroup>
+            </select>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+            <div class="room-selection">
+                <label>琴房编号：</label>
+                <select id="teacher-room">
+                    <option value="琴房1">琴房1</option>
+                    <option value="琴房2">琴房2</option>
+                    <option value="琴房3">琴房3</option>
+                    <option value="琴房4">琴房4</option>
+                    <option value="琴房5">琴房5</option>
+                </select>
+            </div>
+        </div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+        <div class="student-management">
+            <h2>添加学生</h2>
+            <div class="student-input">
+                <input type="text" id="student-name" placeholder="请输入学生姓名">
+                <button id="add-student">添加</button>
+            </div>
+        </div>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+        <div class="progress-section">
+            <h2>学生进度</h2>
+            <table class="progress-table">
+                <thead>
+                    <tr>
+                        <th>学生姓名</th>
+                        <th>状态</th>
+                        <th>试课老师</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="progress-table-body"></tbody>
+            </table>
+        </div>
+
+        <div class="current-list">
+            <div class="list-header">
+                <h2>当前试课</h2>
+            </div>
+            <div id="current-students"></div>
+        </div>
+        
+        <div class="completed-list">
+            <div class="list-header">
+                <h2>已完成试课</h2>
+            </div>
+            <div id="completed-students"></div>
+        </div>
+    </div>
+
+    <script>
+        // 增强的教师数据结构
+        const teachers = {
+            "张老师": { current: [], missed: [], completed: [], room: "琴房1", isTeaching: false },
+            "李老师": { current: [], missed: [], completed: [], room: "琴房2", isTeaching: false },
+            "王老师": { current: [], missed: [], completed: [], room: "琴房3", isTeaching: false },
+            "赵老师": { current: [], missed: [], completed: [], room: "琴房1", isTeaching: false },
+            "陈老师": { current: [], missed: [], completed: [], room: "琴房2", isTeaching: false },
+            "周老师": { current: [], missed: [], completed: [], room: "琴房3", isTeaching: false },
+            "刘老师": { current: [], missed: [], completed: [], room: "琴房1", isTeaching: false },
+            "徐老师": { current: [], missed: [], completed: [], room: "琴房2", isTeaching: false },
+            "孙老师": { current: [], missed: [], completed: [], room: "琴房3", isTeaching: false }
+        };
+
+        let currentTeacher = "";
+        const elements = {
+            teacherSelect: document.getElementById('teacher-select'),
+            teacherRoom: document.getElementById('teacher-room'),
+            studentName: document.getElementById('student-name'),
+            addStudent: document.getElementById('add-student'),
+            currentStudents: document.getElementById('current-students'),
+            completedStudents: document.getElementById('completed-students'),
+            progressTable: document.getElementById('progress-table-body')
+        };
+
+        // 事件监听
+        elements.addStudent.addEventListener('click', addStudent);
+        elements.teacherSelect.addEventListener('change', updateTeacher);
+        elements.teacherRoom.addEventListener('change', updateRoom);
+
+        function addStudent() {
+            if (!currentTeacher) return alert("请先选择老师");
+            const name = elements.studentName.value.trim();
+            if (!name) return alert("请输入学生姓名");
+            
+            teachers[currentTeacher].current.push({
+                id: Date.now(),
+                name: name,
+                status: "current"
+            });
+            
+            elements.studentName.value = "";
+            renderAll();
+            
+            // 仅在添加第一个学生且未开始教学时呼叫
+            if (teachers[currentTeacher].current.length === 1 && !teachers[currentTeacher].isTeaching) {
+                autoCallNext();
+            }
+        }
+
+        function finishClass(studentId) {
+            const teacher = findTeacher(studentId);
+            if (!teacher) return;
+            
+            const index = teachers[teacher].current.findIndex(s => s.id === studentId);
+            if (index !== -1) {
+                const completed = teachers[teacher].current.splice(index, 1)[0];
+                completed.status = "completed";
+                teachers[teacher].completed.push(completed);
+                
+                teachers[teacher].isTeaching = false;
+                renderAll();
+                
+                if (teachers[teacher].current.length > 0) {
+                    autoCallNext(teacher);
+                }
+            }
+        }
+
+        function missStudent(studentId) {
+            const teacher = findTeacher(studentId);
+            if (!teacher) return;
+            
+            const index = teachers[teacher].current.findIndex(s => s.id === studentId);
+            if (index !== -1) {
+                const missed = teachers[teacher].current.splice(index, 1)[0];
+                missed.status = "missed";
+                teachers[teacher].missed.push(missed);
+                
+                teachers[teacher].isTeaching = false;
+                renderAll();
+                
+                if (teachers[teacher].current.length > 0) {
+                    autoCallNext(teacher);
+                }
+            }
+        }
+
+        function requeueStudent(studentId) {
+            const teacher = findTeacher(studentId, 'missed');
+            if (!teacher) return;
+            
+            const student = teachers[teacher].missed.find(s => s.id === studentId);
+            if (student) {
+                teachers[teacher].missed = teachers[teacher].missed.filter(s => s.id !== studentId);
+                student.status = "current";
+                teachers[teacher].current.push(student);
+                
+                renderAll();
+                
+                if (!teachers[teacher].isTeaching) {
+                    autoCallNext(teacher);
+                }
+            }
+        }
+
+        function autoCallNext(teacher = currentTeacher) {
+            if (!teacher) return;
+            if (teachers[teacher].current.length > 0) {
+                teachers[teacher].isTeaching = true;
+                const nextStudent = teachers[teacher].current[0];
+                speakAnnouncement(nextStudent.name, teacher);
+            }
+        }
+
+        function manualCall(name, teacher) {
+            if (!teachers[teacher].isTeaching) {
+                speakAnnouncement(name, teacher);
+                teachers[teacher].isTeaching = true;
+            }
+        }
+
+        function speakAnnouncement(name, teacher) {
+            if (!window.speechSynthesis) return;
+            const room = teachers[teacher].room;
+            const utterance = new SpeechSynthesisUtterance(
+                `请${name}同学到${room}上课`
+            );
+            utterance.lang = 'zh-CN';
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // 渲染相关函数保持不变
+        function renderAll() {
+            renderCurrent();
+            renderCompleted();
+            renderProgress();
+        }
+
+        function renderCurrent() {
+            elements.currentStudents.innerHTML = teachers[currentTeacher].current
+                .map(student => `
+                    <div class="student-item current">
+                        <div class="student-name">${student.name}</div>
+                        <div class="student-actions">
+                            <button class="miss-btn" onclick="missStudent(${student.id})">过号</button>
+                            <button class="finish-btn" onclick="finishClass(${student.id})">上课结束</button>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function renderCompleted() {
+            elements.completedStudents.innerHTML = teachers[currentTeacher].completed
+                .map(student => `
+                    <div class="student-item completed">
+                        <div class="student-name">${student.name}</div>
+                        <div class="student-actions">已完成</div>
+                    </div>
+                `).join('');
+        }
+
+        function renderProgress() {
+            elements.progressTable.innerHTML = getAllStudents()
+                .map(student => `
+                    <tr>
+                        <td>${student.name}</td>
+                        <td>
+                            <span class="status-badge ${getStatusClass(student.status)}">
+                                ${getStatusText(student.status)}
+                            </span>
+                        </td>
+                        <td>${student.teacher}</td>
+                        <td>
+                            <button class="call-btn" onclick="manualCall('${student.name}', '${student.teacher}')">呼叫</button>
+                            ${student.status === 'current' ? `
+                                <button class="miss-btn" onclick="missStudent(${student.id})">过号</button>
+                                <button class="finish-btn" onclick="finishClass(${student.id})">上课结束</button>
+                            ` : ''}
+                            ${student.status === 'missed' ? `
+                                <button class="requeue-btn" onclick="requeueStudent(${student.id})">重新排号</button>
+                            ` : ''}
+                        </td>
+                    </tr>
+                `).join('');
+        }
+
+        // 工具函数保持不变
+        function findTeacher(studentId, listType = 'current') {
+            return Object.keys(teachers).find(teacher => 
+                teachers[teacher][listType].some(s => s.id === studentId)
+            );
+        }
+
+        function getAllStudents() {
+            return Object.keys(teachers).reduce((acc, teacher) => {
+                return acc.concat(
+                    ...['current', 'missed', 'completed'].map(type => 
+                        teachers[teacher][type].map(s => ({ ...s, teacher }))
+                    )
+                );
+            }, []);
+        }
+
+        function getStatusText(status) {
+            return { current: '试课中', missed: '已过号', completed: '已完成' }[status];
+        }
+
+        function getStatusClass(status) {
+            return { current: 'current-badge', missed: 'missed-badge', completed: 'completed-badge' }[status];
+        }
+
+        function updateTeacher() {
+            currentTeacher = elements.teacherSelect.value;
+            if (currentTeacher) {
+                elements.teacherRoom.value = teachers[currentTeacher].room;
+            }
+            renderAll();
+        }
+
+        function updateRoom() {
+            if (currentTeacher) {
+                teachers[currentTeacher].room = elements.teacherRoom.value;
+            }
+        }
+    </script>
+</body>
 </html>
